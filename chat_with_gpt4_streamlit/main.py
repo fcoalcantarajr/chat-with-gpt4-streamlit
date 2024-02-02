@@ -6,7 +6,7 @@ from utils import export_current_conversation, num_tokens_from_messages
 st.title(f"Chat with [{OAI_MODEL}] model using Streamlit")
 st.subheader(f"Conversations will be exported to {EXPORT_DIR}")
 
-# Create a button
+# Create an export button
 export_button = st.button("Export")
 
 if export_button:
@@ -24,7 +24,15 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-if prompt := st.text_area("What is up?"):
+# Layout modification: Include the text_area and send button in the same line
+col1, col2 = st.columns([5, 1])  # Adjust the ratio as needed
+with col1:
+    prompt = st.text_area("What is up?", key="prompt", height=75)
+with col2:
+    send_button = st.button("Send")
+
+# Process the prompt when the button is clicked
+if send_button and prompt:
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
@@ -33,17 +41,20 @@ if prompt := st.text_area("What is up?"):
         message_placeholder = st.empty()
         full_response = ""
         for response in client.chat.completions.create(
-            model=st.session_state["openai_model"],
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
+                model=st.session_state["openai_model"],
+                messages=[
+                    {"role": m["role"], "content": m["content"]}
+                    for m in st.session_state.messages
+                ],
+                stream=True,
         ):
             full_response += (response.choices[0].delta.content or "")
             message_placeholder.markdown(full_response + "▌")
         message_placeholder.markdown(full_response)
     st.session_state.messages.append({"role": "assistant", "content": full_response})
 
-# Use st.markdown with inline HTML styling to change text color
+    # # Clear the prompt area after sending the message
+    # st.session_state['prompt'] = ''
+
+# Display the total tokens used in the conversation
 st.markdown(f"<span style='color:red'>Total tokens used till now in conversation (your input + model's output): {num_tokens_from_messages(st.session_state.messages, OAI_MODEL)}</span>", unsafe_allow_html=True)
