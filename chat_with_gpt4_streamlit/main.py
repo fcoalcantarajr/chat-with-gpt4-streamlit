@@ -27,7 +27,7 @@ for message in st.session_state.messages:
 # Layout modification: Include the text_area and send button in the same line
 col1, col2 = st.columns([5, 1])  # Adjust the ratio as needed
 with col1:
-    prompt = st.text_area("What is up?", key="prompt", height=75)
+    prompt = st.text_area("What is up?", key="prompt", height=75, label_visibility="collapse")
 with col2:
     send_button = st.button("Send")
 
