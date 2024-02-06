@@ -47,8 +47,8 @@ if send_button and prompt:
         message_placeholder.markdown(full_response)
     st.session_state.messages.append({"role": "assistant", "content": full_response})
 
-    data = export_current_conversation(st.session_state.messages)
-    download_button = st.download_button(label="Download", data=data, file_name='chat-gpt4.csv', mime='text/csv')
+dados = export_current_conversation(st.session_state.messages)
+download_button = st.download_button(label="Download", data=dados, file_name='chat-gpt4.csv', mime='text/csv')
 
     # # Clear the prompt area after sending the message
     # st.session_state['prompt'] = ''
