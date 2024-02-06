@@ -21,8 +21,9 @@ def get_export_file_path() -> str:
 def export_current_conversation(current_conversation: list[dict]):
     # export_file_path = get_export_file_path()
     df = pd.DataFrame(current_conversation)
-    csv = df.to_csv(index=False).encode('utf-8')
-    return csv
+    return df
+    # csv = df.to_csv(index=False).encode('utf-8')
+    # return csv
     # print(f"Conversation exported successfully to {export_file_path}")
 
 
