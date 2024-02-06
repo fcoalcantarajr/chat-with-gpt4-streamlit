@@ -6,14 +6,6 @@ from utils import export_current_conversation, num_tokens_from_messages
 st.title(f"Chat with [{OAI_MODEL}] model using Streamlit")
 st.subheader(f"Conversations will be exported to {EXPORT_DIR}")
 
-# Create an export button
-
-data = None
-download_button = st.download_button(label="Download", data=data, file_name='chat-gpt4.csv', mime='text/csv')
-
-if download_button:
-    data = export_current_conversation(st.session_state.messages)
-
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 if "openai_model" not in st.session_state:
@@ -54,6 +46,9 @@ if send_button and prompt:
             message_placeholder.markdown(full_response + "▌")
         message_placeholder.markdown(full_response)
     st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+    data = export_current_conversation(st.session_state.messages)
+    download_button = st.download_button(label="Download", data=data, file_name='chat-gpt4.csv', mime='text/csv')
 
     # # Clear the prompt area after sending the message
     # st.session_state['prompt'] = ''
