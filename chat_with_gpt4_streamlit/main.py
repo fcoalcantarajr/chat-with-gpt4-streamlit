@@ -48,8 +48,8 @@ if send_button and prompt:
     st.session_state.messages.append({"role": "assistant", "content": full_response})
 
 dados = export_current_conversation(st.session_state.messages)
-data_as_csv= dados.to_csv(index=False).encode("utf-8")
-download_button = st.download_button(label="Download", data=data_as_csv, file_name='chat-gpt4.csv', mime='text/csv')
+data_as_html= dados.to_html(index=False).encode("utf-8")
+download_button = st.download_button(label="Download", data=data_as_html, file_name='chat-gpt4.html', mime='text/html')
 
     # # Clear the prompt area after sending the message
     # st.session_state['prompt'] = ''
