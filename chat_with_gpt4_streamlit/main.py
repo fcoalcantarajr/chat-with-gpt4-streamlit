@@ -4,7 +4,7 @@ from configs import OAI_MODEL, EXPORT_DIR
 from utils import export_current_conversation, num_tokens_from_messages
 
 st.title(f"Chat with [{OAI_MODEL}] model using Streamlit")
-st.subheader(f"Conversations will be exported to {EXPORT_DIR}")
+# st.subheader(f"Conversations will be exported to {EXPORT_DIR}")
 
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
