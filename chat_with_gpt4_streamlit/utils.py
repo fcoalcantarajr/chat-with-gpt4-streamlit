@@ -19,10 +19,10 @@ def get_export_file_path() -> str:
     return os.path.join(EXPORT_DIR, export_file_name + EXPORT_FILE_EXTENSION)
 
 def export_current_conversation(current_conversation: list[dict]):
-    export_file_path = get_export_file_path()
+    # export_file_path = get_export_file_path()
     df = pd.DataFrame(current_conversation)
-    df.to_csv(export_file_path, index=False)
-    print(f"Conversation exported successfully to {export_file_path}")
+    df.to_csv(index=False).encode('utf-8')
+    # print(f"Conversation exported successfully to {export_file_path}")
 
 
 """

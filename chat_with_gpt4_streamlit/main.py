@@ -7,9 +7,9 @@ st.title(f"Chat with [{OAI_MODEL}] model using Streamlit")
 st.subheader(f"Conversations will be exported to {EXPORT_DIR}")
 
 # Create an export button
-export_button = st.button("Export")
+download_button = st.download_button(label="Download", data='csv', file_name='chat-gpt4.csv', mime='text/csv')
 
-if export_button:
+if download_button:
     export_current_conversation(st.session_state.messages)
 
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
