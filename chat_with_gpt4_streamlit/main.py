@@ -9,7 +9,7 @@ st.subheader(f"Conversations will be exported to {EXPORT_DIR}")
 # Create an export button
 
 data = None
-download_button = st.download_button(label="Download", data=None, file_name='chat-gpt4.csv', mime='text/csv')
+download_button = st.download_button(label="Download", data=data, file_name='chat-gpt4.csv', mime='text/csv')
 
 if download_button:
     data = export_current_conversation(st.session_state.messages)
