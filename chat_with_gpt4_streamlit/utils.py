@@ -25,7 +25,7 @@ def export_current_conversation(current_conversation: list[dict]):
     updated_conversation = []
     for message in current_conversation:
         # Convert markdown to HTML and handle potential HTML entities correctly.
-        content_html = markdown.markdown(html.unescape(message["content"]))
+        content_html = markdown.markdown(message["content"])
         updated_message = {
             "role": message["role"],
             "content": content_html
