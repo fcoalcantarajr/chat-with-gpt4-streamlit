@@ -3,6 +3,8 @@ from datetime import datetime
 from configs import EXPORT_DIR
 import pandas as pd
 import tiktoken
+import markdown
+import html
 
 EXPORT_FILE_EXTENSION = ".csv"
 
@@ -19,12 +21,20 @@ def get_export_file_path() -> str:
     return os.path.join(EXPORT_DIR, export_file_name + EXPORT_FILE_EXTENSION)
 
 def export_current_conversation(current_conversation: list[dict]):
-    # export_file_path = get_export_file_path()
-    df = pd.DataFrame(current_conversation)
+    # Update each content from markdown to HTML
+    updated_conversation = []
+    for message in current_conversation:
+        # Convert markdown to HTML and handle potential HTML entities correctly.
+        content_html = markdown.markdown(html.unescape(message["content"]))
+        updated_message = {
+            "role": message["role"],
+            "content": content_html
+        }
+        updated_conversation.append(updated_message)
+
+    # Create a DataFrame from the updated conversation
+    df = pd.DataFrame(updated_conversation)
     return df
-    # csv = df.to_csv(index=False).encode('utf-8')
-    # return csv
-    # print(f"Conversation exported successfully to {export_file_path}")
 
 
 """
